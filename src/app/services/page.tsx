@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { Briefcase, Building2, Gem, Landmark, Sparkles } from "lucide-react";
+import { Briefcase, Building2, ChevronDown, Gem, Landmark, Sparkles } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -197,45 +197,73 @@ export default function ServicesPage() {
                 </div>
               </div>
 
-              <div className="grid gap-2.5 md:hidden">
+              {/* ── Mobile: accordion cards ───────────────────────────────────── */}
+              <div className="grid gap-3 md:hidden">
                 {SERVICES.map((service) => {
                   const Icon = service.icon;
                   const isActive = service.id === activeId;
 
                   return (
-                    <button
-                      key={`mobile-${service.id}`}
-                      type="button"
-                      onClick={() => setActiveId(service.id)}
-                      onMouseEnter={() => setActiveId(service.id)}
-                      className={`group w-full rounded-[24px] border p-2 text-left transition-all duration-300 ${isActive
-                          ? "border-white bg-white shadow-[0_16px_36px_rgba(43,92,255,0.15)] scale-[1.02]"
-                          : "border-white/60 bg-white/40 shadow-sm backdrop-blur-md hover:bg-white/80 hover:border-white hover:shadow-[0_8px_24px_rgba(43,92,255,0.08)]"
-                        }`}
-                    >
-                      <div className="flex items-center gap-3.5 rounded-[18px] bg-gradient-to-br from-[#f8faff] to-white p-3 shadow-[inset_0_0_0_1px_rgba(255,255,255,1)]">
-                        <span
-                          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-[12px] shadow-sm transition-all duration-300 ${isActive
-                              ? "bg-gradient-to-br from-[#2b5cff] to-[#04bfff] text-white shadow-[0_6px_16px_rgba(4,191,255,0.3)]"
-                              : "bg-white text-[#2b5cff] shadow-[0_2px_6px_rgba(43,92,255,0.08)] group-hover:bg-[#f0f5ff]"
-                            }`}
-                        >
-                          <Icon className={`h-5 w-5 transition-transform duration-300 ${isActive ? "scale-110" : "group-hover:scale-110"}`} />
-                        </span>
-                        <div>
-                          <p
-                            className={`text-[15px] font-bold leading-tight tracking-tight transition-colors duration-300 ${isActive ? "text-[#1e3a8a]" : "text-[#475569] group-hover:text-[#1e3a8a]"
+                    <div key={`mobile-${service.id}`}>
+                      <button
+                        type="button"
+                        onClick={() => setActiveId(isActive ? null : service.id)}
+                        className={`group w-full rounded-[22px] border p-2 text-left transition-all duration-300 ${isActive
+                            ? "border-[#dce7fb] bg-white shadow-[0_12px_32px_rgba(43,92,255,0.13)]"
+                            : "border-white/60 bg-white/40 shadow-sm backdrop-blur-md active:bg-white/70"
+                          }`}
+                      >
+                        <div className="flex items-center gap-3 rounded-[16px] bg-gradient-to-br from-[#f8faff] to-white p-3 shadow-[inset_0_0_0_1px_rgba(255,255,255,1)]">
+                          <span
+                            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-[12px] shadow-sm transition-all duration-300 ${isActive
+                                ? "bg-gradient-to-br from-[#2b5cff] to-[#04bfff] text-white shadow-[0_6px_16px_rgba(4,191,255,0.3)]"
+                                : "bg-white text-[#2b5cff] shadow-[0_2px_6px_rgba(43,92,255,0.08)]"
                               }`}
+                          >
+                            <Icon className={`h-5 w-5 transition-transform duration-300 ${isActive ? "scale-110" : ""}`} />
+                          </span>
+                          <p
+                            className={`flex-1 text-[15px] font-bold leading-tight tracking-tight transition-colors duration-300 ${isActive ? "text-[#1e3a8a]" : "text-[#475569]"}`}
                           >
                             {service.title}
                           </p>
+                          <ChevronDown
+                            className={`h-4 w-4 shrink-0 text-[#7f94bb] transition-transform duration-300 ${isActive ? "rotate-180" : ""}`}
+                          />
                         </div>
-                      </div>
-                    </button>
+                      </button>
+
+                      {/* Inline accordion detail */}
+                      <AnimatePresence>
+                        {isActive && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25, ease: "easeInOut" }}
+                            className="overflow-hidden"
+                          >
+                            <div className="mt-2 rounded-2xl border border-[#dce7fb] bg-white/90 p-4 shadow-sm">
+                              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#7f94bb]">About</p>
+                              <p className="mt-2 text-sm leading-relaxed text-finance-text">{service.summary}</p>
+                              <div className="mt-3 grid gap-2">
+                                {service.highlights.map((item) => (
+                                  <div key={item} className="flex items-start gap-2.5 rounded-xl border border-[#e8effe] bg-[#f8faff] p-3">
+                                    <span className="mt-[5px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#2b5cff]" />
+                                    <p className="text-sm leading-relaxed text-finance-text">{item}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   );
                 })}
               </div>
 
+              {/* ── Desktop overlay (hover/click on mindmap nodes) ──────────── */}
               <AnimatePresence>
                 {activeService && (
                   <motion.div
@@ -243,7 +271,7 @@ export default function ServicesPage() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute inset-0 z-30 flex items-center justify-center bg-[#eaf2ff]/40 p-4 backdrop-blur-[12px] md:p-6"
+                    className="absolute inset-0 z-30 hidden items-center justify-center bg-[#eaf2ff]/40 p-6 backdrop-blur-[12px] md:flex"
                     onClick={() => setActiveId(null)}
                     onMouseLeave={() => setActiveId(null)}
                   >
@@ -252,13 +280,13 @@ export default function ServicesPage() {
                       animate={{ scale: 1, opacity: 1, y: 0 }}
                       exit={{ scale: 0.9, opacity: 0, y: 20 }}
                       transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                      className="w-full max-w-3xl rounded-3xl border border-white/50 bg-white/60 p-5 shadow-[0_28px_56px_rgba(16,47,103,0.25)] backdrop-blur-2xl md:p-6"
+                      className="w-full max-w-3xl rounded-3xl border border-white/50 bg-white/60 p-6 shadow-[0_28px_56px_rgba(16,47,103,0.25)] backdrop-blur-2xl"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <div className="flex items-start justify-between gap-4">
                         <div>
                           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#7f94bb]">Service Snapshot</p>
-                          <h2 className="mt-2 text-xl font-semibold tracking-tight text-finance-text md:text-2xl">{activeService.title}</h2>
+                          <h2 className="mt-2 text-2xl font-semibold tracking-tight text-finance-text">{activeService.title}</h2>
                         </div>
                         <button
                           type="button"
@@ -287,7 +315,7 @@ export default function ServicesPage() {
               </AnimatePresence>
             </div>
 
-            <div className="mt-6 flex flex-wrap items-center gap-3">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <Link
                 href="/#book-discovery-call"
                 className="inline-flex items-center justify-center rounded-full bg-[#2b5cff] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(43,92,255,0.28)] hover:bg-[#224ed8]"

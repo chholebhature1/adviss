@@ -1089,7 +1089,7 @@ export default function HomepageClient() {
             ═══════════════════════════════════════════════════════════════════ */}
         <motion.section
           id="insights-priorities"
-          className="relative w-full overflow-hidden py-28 text-white md:py-36"
+          className="hidden md:block relative w-full overflow-hidden py-28 text-white md:py-36"
           style={{ background: "linear-gradient(155deg, #1a3f8f 0%, #234daa 35%, #1e408c 70%, #172f6e 100%)" }}
           variants={sectionReveal}
           initial="hidden"
@@ -1329,7 +1329,7 @@ export default function HomepageClient() {
         {/* SECTION 1: EXECUTIVE INTELLIGENCE LAYER */}
         <motion.section
           id="insights"
-          className="relative overflow-hidden bg-[linear-gradient(160deg,#214a98_0%,#24539f_54%,#1f468d_100%)] py-24 text-white md:py-28"
+          className="hidden md:block relative overflow-hidden bg-[linear-gradient(160deg,#214a98_0%,#24539f_54%,#1f468d_100%)] py-24 text-white md:py-28"
           variants={sectionReveal}
           initial="hidden"
           whileInView="show"
@@ -1523,7 +1523,7 @@ export default function HomepageClient() {
 
         <motion.section
           id="trusted-partners"
-          className="relative overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f7f9fc_100%)] py-24 md:py-28"
+          className="hidden md:block relative overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f7f9fc_100%)] py-24 md:py-28"
           variants={sectionReveal}
           initial="hidden"
           whileInView="show"
@@ -1588,7 +1588,7 @@ export default function HomepageClient() {
             ═══════════════════════════════════════════════════════════════════ */}
         <motion.section
           id="social-connect"
-          className="relative overflow-hidden py-24 md:py-32"
+          className="hidden md:block relative overflow-hidden py-24 md:py-32"
           style={{ background: "linear-gradient(175deg, #f0f5ff 0%, #e4edff 35%, #f7f9ff 70%, #eef4ff 100%)" }}
           variants={sectionReveal}
           initial="hidden"
@@ -2075,7 +2075,7 @@ export default function HomepageClient() {
 
         {/* Soft Push Banner */}
         <motion.div
-          className="relative z-10 mx-auto -mt-8 mb-16 w-full max-w-4xl px-6 md:px-10"
+          className="hidden md:block relative z-10 mx-auto -mt-8 mb-16 w-full max-w-4xl px-6 md:px-10"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.8 }}

@@ -75,6 +75,15 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: [defaultOgImage],
   },
+  icons: {
+    icon: [
+      { url: "/image/pravix-visualmark.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/image/pravix-visualmark.png", type: "image/png" },
+    ],
+    shortcut: "/image/pravix-visualmark.png",
+  },
   robots: {
     index: true,
     follow: true,
